@@ -21,31 +21,45 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- *
+ * Class that represents a customer.
  * @author rastko
  */
 @Entity
 @Table(name = "customer")
 
 public class Customer {
-
+	/**
+	 * Attribute - Id primary key as Long.
+	 * */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    
+    /**
+	 * Attribute - first name as String.
+	 * */
     @Column(name = "first_name")
     private String firstName;
-    
+    /**
+	 * Attribute - last name as String.
+	 * */
     @Column(name = "last_name")
     private String lastName;
-    
+    /**
+	 * Attribute - email as String.
+	 * */
     @Column(name = "email")
     private String email;
-    
+    /**
+	 * Attribute - orders as HashSet of Order objects.
+	 * */
     @OneToMany(mappedBy = "customer",cascade = CascadeType.ALL)
     private Set<Order> orders = new HashSet<>();
-    
+    /**
+     * Method to add orders to customer.
+     * @param order Order object which is to be saved.
+     * 
+     * */
     public void add(Order order){
          if(order != null){
             if(orders == null){
@@ -65,7 +79,12 @@ public class Customer {
 		
 		return firstName;
 	}
-
+	/**
+	 * Sets first name attribute to new value.
+	 * @param firstName name as String
+	 * @throws java.lang.NullPointerException if argument is null
+	 * @throws java.lang.RuntimeException if argument is shorter than 2 characters
+	 * */
 	public void setFirstName(String firstName) {
 		if(firstName == null) {
 			throw new NullPointerException("Cannot be null!");
@@ -79,7 +98,12 @@ public class Customer {
 	public String getLastName() {
 		return lastName;
 	}
-
+	/**
+	 * Sets last name attribute to new value.
+	 * @param lastName name as String
+	 * @throws java.lang.NullPointerException if argument is null
+	 * @throws java.lang.RuntimeException if argument is shorter than 2 characters
+	 * */
 	public void setLastName(String lastName) {
 		if(lastName == null) {
 			throw new NullPointerException("Cannot be null!");
@@ -93,7 +117,12 @@ public class Customer {
 	public String getEmail() {
 		return email;
 	}
-
+	/**
+	 * Sets email attribute to new value.
+	 * @param email name as String
+	 * @throws java.lang.NullPointerException if argument is null
+	 * @throws java.lang.RuntimeException if argument is shorter than 2 characters
+	 * */
 	public void setEmail(String email) {
 		if(email == null) {
 			throw new NullPointerException("Cannot be null!");
@@ -108,14 +137,21 @@ public class Customer {
 	public Set<Order> getOrders() {
 		return orders;
 	}
-
+	/**
+	 * Sets orders attribute to new value.
+	 * @param orders name as Set of Order objects
+	 * @throws java.lang.NullPointerException if argument is null
+	 *
+	 * */
 	public void setOrders(Set<Order> orders) {
 		if(orders == null) {
 			throw new NullPointerException("Orders cannot be null.");
 		}
 		this.orders = orders;
 	}
-
+	/**
+	 * @return result Returns hashCode result.
+	 * */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -123,7 +159,13 @@ public class Customer {
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		return result;
 	}
-
+	/**
+	 * Compares email attribute of the argument to this object.
+	 * 
+	 * @return true if objects are equal
+	 * @return false if objects are not equal
+	 * 
+	 * */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

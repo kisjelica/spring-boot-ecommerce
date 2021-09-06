@@ -16,22 +16,28 @@ import javax.persistence.Table;
 import lombok.Data;
 
 /**
- *
+ * Class which represents a State.
  * @author rastko
  */
 @Entity
 @Table(name = "state")
 
 public class State {
-
+	/**
+	 * Attribute - Id primary key as Long.
+	 * */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
-
+    /**
+   	 * Attribute - state name as String.
+   	 * */
     @Column(name = "name")
     private String name;
-
+    /**
+     * Attribute - country to which the state belongs as a Country object.
+     * */
     @ManyToOne
     @JoinColumn(name = "country_id")
     private Country country;
@@ -44,7 +50,12 @@ public class State {
 	public String getName() {
 		return name;
 	}
-
+	/**
+	 * Sets name attribute to new value.
+	 * @param name  name as String
+	 * @throws java.lang.NullPointerException if argument is null
+	 * @throws java.lang.RuntimeException if argument is not at least 2 characters long.
+	 * */
 	public void setName(String name) {
 		if(name == null) {
 			throw new NullPointerException("Name cannot be null");
@@ -58,7 +69,11 @@ public class State {
 	public Country getCountry() {
 		return country;
 	}
-
+	/**
+	 * Sets the country attribute to the given value.
+	 * @param country as a Country attribute.
+	 * @throws java.lang.NullPointerException if argument is null
+	 * */
 	public void setCountry(Country country) {
 		if(country == null) {
 			throw new NullPointerException("Country cannot be null!");
@@ -66,7 +81,9 @@ public class State {
 		this.country = country;
 	}
 
-
+	/**
+	 * @return result Returns hashCode result.
+	 * */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -76,7 +93,13 @@ public class State {
 		return result;
 	}
 
-
+	/**
+	 * Compares country attribute and name attribute of the argument to this object.
+	 * 
+	 * @return true if objects are equal
+	 * @return false if objects are not equal
+	 * 
+	 * */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

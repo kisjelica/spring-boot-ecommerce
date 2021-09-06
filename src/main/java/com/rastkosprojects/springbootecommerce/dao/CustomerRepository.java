@@ -9,9 +9,16 @@ import com.rastkosprojects.springbootecommerce.entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- *
+ * Interface which represents the DAO to the Customer objects.
+ * Spring Data REST scans the repository and automatically opens endpoints.
  * @author rastko
  */
 public interface CustomerRepository extends JpaRepository<Customer, Long>{
+	/**
+	 * Query method which is used by Spring Data REST and automatically implemented.
+	 * Used to find the customers by email.
+	 * @param email email as String
+	 * @return Customer returns a Customer object
+	 * */
     Customer findByEmail(String email);
 }

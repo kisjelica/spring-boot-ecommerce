@@ -22,12 +22,15 @@ import org.springframework.http.HttpMethod;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 /**
- *
+ * Class for configuring the repositories.
  * @author rastko
  */
 @Configuration
 public class MyDataRestConfig implements RepositoryRestConfigurer {
 
+	/**
+	 * Entity manager attribute which is to be injected.
+	 * */
     private EntityManager entityManager;
 
     @Autowired
@@ -36,7 +39,13 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
     }
     
     
-    
+    /**
+     * Method to configure the repositories.
+     * Used to disable  HTTP methods for certain repositories
+     * Also used to expose ids of repositories
+     * @param config the configuration of the application
+     * @param cors cross-origin resource sharing
+     * */
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry cors) {
         HttpMethod[] unsupportedActions = {HttpMethod.PUT, HttpMethod.POST, HttpMethod.DELETE};
@@ -51,7 +60,10 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
 
         exposeIds(config);
     }
-
+    /**
+     * Method used to expose ids at the endpoints
+     * @param config the configuration of the application
+     * */
     private void exposeIds(RepositoryRestConfiguration config) {
         //expose entity ids
         
@@ -68,7 +80,12 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
         config.exposeIdsFor(domainTypes);
         
     }
-    
+    /**
+     * Helper method to disable the given http methods
+     * @param theClass class for which we disable the methods
+     * @param config the configuration of the application
+     * @param unsupportedActions the Http methods to be disabled
+     * */
     private void disableHttpMethods(Class theClass,RepositoryRestConfiguration config, HttpMethod[] unsupportedActions){
     config.getExposureConfiguration().forDomainType(theClass)
         .withItemExposure((metdata, httpMethods) -> httpMethods.disable(unsupportedActions))

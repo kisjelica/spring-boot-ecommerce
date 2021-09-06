@@ -11,7 +11,8 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 /**
- *
+ * Interface which represents the DAO to the ProductCategory objects.
+ * Spring Data REST scans the repository and automatically opens endpoints.
  * @author rastko
  */
 @CrossOrigin("http://localhost:4200")

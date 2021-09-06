@@ -19,7 +19,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- *
+ * Class which represents the product category.
  * @author rastko
  */
 @Entity
@@ -28,14 +28,21 @@ import lombok.Setter;
 //@Setter
 //instead of @Data because of a known lombok bug with many-to-one relationships
 public class ProductCategory {
+	/**
+	 * Attribute - Id primary key as Long.
+	 * */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private Long id;
-    
+    /**
+	 * Attribute - category name as String.
+	 * */
     @Column(name="category_name")
     private String categoryName;
-    
+    /**
+   	 * Attribute - products which belong to category as Set of Product objects.
+   	 * */
     @OneToMany(cascade=CascadeType.ALL,mappedBy = "category")
     private Set<Product> products;
 
@@ -46,7 +53,12 @@ public class ProductCategory {
 	public String getCategoryName() {
 		return categoryName;
 	}
-
+	/**
+	 * Sets category name attribute to new value.
+	 * @param categoryName  name as String
+	 * @throws java.lang.NullPointerException if argument is null
+	 * @throws java.lang.RuntimeException if argument is not at least 2 characters long.
+	 * */
 	public void setCategoryName(String categoryName) {
 		if(categoryName == null) {
 			throw new NullPointerException("Category name cannot be null");
@@ -56,18 +68,24 @@ public class ProductCategory {
 		}
 		this.categoryName = categoryName;
 	}
-
+	
 	public Set<Product> getProducts() {
 		return products;
 	}
-
+	/**
+	 * Sets products attribute to new value.
+	 * @param products products as a Set of Product objects.
+	 * throws java.lang.NullPointerException if argument is null
+	 * */
 	public void setProducts(Set<Product> products) {
 		if(products == null) {
 			throw new NullPointerException();
 		}
 		this.products = products;
 	}
-
+	/**
+	 * @return result Returns hashCode result.
+	 * */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -75,7 +93,13 @@ public class ProductCategory {
 		result = prime * result + ((categoryName == null) ? 0 : categoryName.hashCode());
 		return result;
 	}
-
+	/**
+	 * Compares category name attribute of the argument to this object.
+	 * 
+	 * @return true if objects are equal
+	 * @return false if objects are not equal
+	 * 
+	 * */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
