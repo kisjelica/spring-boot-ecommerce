@@ -24,7 +24,8 @@ import lombok.Setter;
 
 @Entity
 @Table(name="order_item")
-
+@Getter
+@Setter
 public class OrderItem {
     
     @Id
@@ -47,66 +48,4 @@ public class OrderItem {
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
-
-	public Long getId() {
-		return id;
-	}
-
-
-	public String getImageUrl() {
-		return imageUrl;
-	}
-
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
-	}
-
-	public BigDecimal getUnitPrice() {
-		return unitPrice;
-	}
-
-	public void setUnitPrice(BigDecimal unitPrice) {
-		if(unitPrice == null) {
-			throw new NullPointerException("Unit price cannot be null");
-		}
-		if(unitPrice.compareTo(BigDecimal.ZERO) <= 0) {
-			throw new RuntimeException("Unit price must be greater than zero!");
-		}
-		this.unitPrice = unitPrice;
-	}
-
-	public int getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(int quantity) {
-		if(quantity <= 0) {
-			throw new RuntimeException("Quantity must be greater than zero!");
-		}
-		this.quantity = quantity;
-	}
-
-	public Long getProductId() {
-		return productId;
-	}
-
-	public void setProductId(Long productId) {
-		if(productId == null) {
-			throw new NullPointerException("Product id cannot be null");
-		}
-		this.productId = productId;
-	}
-
-	public Order getOrder() {
-		return order;
-	}
-
-	public void setOrder(Order order) {
-		if(order == null) {
-			throw new NullPointerException("Order cannot be null!");
-		}
-		this.order = order;
-	}
-    
-    
 }
