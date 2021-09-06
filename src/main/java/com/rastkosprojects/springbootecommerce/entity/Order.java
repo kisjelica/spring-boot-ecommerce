@@ -31,8 +31,6 @@ import org.hibernate.annotations.UpdateTimestamp;
  */
 @Entity
 @Table(name = "orders")
-@Getter
-@Setter
 public class Order {
 
     @Id
@@ -75,13 +73,134 @@ public class Order {
     @JoinColumn(name = "billing_address_id")
     private Address billingAddress;
     
-    public void add(OrderItem item){
+    public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getOrderTrackingNumber() {
+		return orderTrackingNumber;
+	}
+
+	public void setOrderTrackingNumber(String orderTrackingNumber) {
+		if(orderTrackingNumber == null) {
+			throw new NullPointerException("Order tracking number cannot be null.");
+		}
+		if(orderTrackingNumber.length() != 36) {
+			throw new RuntimeException("Order tracking number must be a 36 character UUID");
+		}
+		this.orderTrackingNumber = orderTrackingNumber;
+	}
+
+	public int getTotalQuantity() {
+		return totalQuantity;
+	}
+
+	public void setTotalQuantity(int totalQuantity) {
+		if(totalQuantity == 0) {
+			throw new RuntimeException("Total quantity cannot be zero.");
+		}
+		this.totalQuantity = totalQuantity;
+	}
+
+	public BigDecimal getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(BigDecimal totalPrice) {
+		if(totalPrice.equals(BigDecimal.ZERO)) {
+			throw new RuntimeException("Total price cannot be zero");
+		}
+		this.totalPrice = totalPrice;
+	}
+
+	
+
+	public Set<OrderItem> getOrderItems() {
+		return orderItems;
+	}
+
+	public void setOrderItems(Set<OrderItem> orderItems) {
+		if(orderItems == null) {
+			throw new NullPointerException("Order items cannot be null");
+		}
+		if(orderItems.isEmpty()) {
+			throw new RuntimeException("Order items cannot be empty");
+		}
+		this.orderItems = orderItems;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		if(customer == null) {
+			throw new NullPointerException("Customer cannot be null");
+		}
+		this.customer = customer;
+	}
+
+	public Address getShippingAddress() {
+		return shippingAddress;
+	}
+
+	public void setShippingAddress(Address shippingAddress) {
+		if(shippingAddress == null) {
+			throw new NullPointerException("Shipping address cannot be null");
+		}
+		this.shippingAddress = shippingAddress;
+	}
+
+	public Address getBillingAddress() {
+		return billingAddress;
+	}
+
+	public void setBillingAddress(Address billingAddress) {
+		if(billingAddress == null) {
+			throw new NullPointerException("Billing address cannot be null");
+		}
+		this.billingAddress = billingAddress;
+	}
+
+	public void add(OrderItem item){
         if(item != null){
             if(orderItems == null){
                 orderItems = new HashSet<>();
             }
             orderItems.add(item);
             item.setOrder(this);
+        }else {
+        	throw new NullPointerException("Null items cannot be added to order!");
         }
     }
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((orderTrackingNumber == null) ? 0 : orderTrackingNumber.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Order other = (Order) obj;
+		if (orderTrackingNumber == null) {
+			if (other.orderTrackingNumber != null)
+				return false;
+		} else if (!orderTrackingNumber.equals(other.orderTrackingNumber))
+			return false;
+		return true;
+	}
+    
 }
