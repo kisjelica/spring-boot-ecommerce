@@ -34,6 +34,9 @@ public class CheckoutServiceImpl implements CheckoutService {
     @Transactional
     public PurchaseResponse placeOrder(Purchase purchase) {
         //retrieve the order info from dto
+    	if(purchase == null) {
+    		throw new NullPointerException("Purchase cannot be null");
+    	}
         Order order = purchase.getOrder();
         //generate tracking number
         String orderTrackingNumber = generateOrderTrackingNumber();
