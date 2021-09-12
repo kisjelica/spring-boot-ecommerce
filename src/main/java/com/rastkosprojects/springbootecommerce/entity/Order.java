@@ -130,7 +130,7 @@ public class Order {
 	 * @throws java.lang.RuntimeException if quantity is zero or less.
 	 * */
 	public void setTotalQuantity(int totalQuantity) {
-		if(totalQuantity < 0) {
+		if(totalQuantity <= 0) {
 			throw new RuntimeException("Total quantity cannot be zero.");
 		}
 		this.totalQuantity = totalQuantity;

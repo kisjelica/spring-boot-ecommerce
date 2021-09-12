@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
  * Spring Data REST scans the repository and automatically opens endpoints.
  * @author rastko
  */
-@CrossOrigin("http://localhost:4200")
+
 @RepositoryRestResource(collectionResourceRel = "countries", path="countries")
 public interface CountryRepository extends JpaRepository<Country, Integer>{
     

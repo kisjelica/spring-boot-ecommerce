@@ -15,11 +15,13 @@ import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.metamodel.EntityType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.util.pattern.PathPattern;
 
 /**
  * Class for configuring the repositories.
@@ -27,7 +29,9 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
  */
 @Configuration
 public class MyDataRestConfig implements RepositoryRestConfigurer {
-
+    @Value("${allowed.origins}")
+    String allowedOrigins;
+    
 	/**
 	 * Entity manager attribute which is to be injected.
 	 * */
@@ -48,7 +52,7 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
      * */
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry cors) {
-        HttpMethod[] unsupportedActions = {HttpMethod.PUT, HttpMethod.POST, HttpMethod.DELETE};
+        HttpMethod[] unsupportedActions = {HttpMethod.PUT, HttpMethod.POST, HttpMethod.DELETE,HttpMethod.PATCH};
         //disable HTTP methods PUT, POST and DELETE for the Product entity
         disableHttpMethods(Product.class, config, unsupportedActions);
         //the same for ProductCategory
@@ -59,6 +63,9 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
         disableHttpMethods(State.class, config, unsupportedActions);
 
         exposeIds(config);
+        //configure cors mapping
+        cors.addMapping(config.getBasePath() + "/**").allowedOrigins(allowedOrigins);
+        
     }
     /**
      * Method used to expose ids at the endpoints
