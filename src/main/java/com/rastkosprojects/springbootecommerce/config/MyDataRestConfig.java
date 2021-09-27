@@ -6,6 +6,7 @@
 package com.rastkosprojects.springbootecommerce.config;
 
 import com.rastkosprojects.springbootecommerce.entity.Country;
+import com.rastkosprojects.springbootecommerce.entity.Order;
 import com.rastkosprojects.springbootecommerce.entity.Product;
 import com.rastkosprojects.springbootecommerce.entity.ProductCategory;
 import com.rastkosprojects.springbootecommerce.entity.State;
@@ -61,7 +62,7 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
         //for country and state
         disableHttpMethods(Country.class, config, unsupportedActions);
         disableHttpMethods(State.class, config, unsupportedActions);
-
+        disableHttpMethods(Order.class, config, unsupportedActions);
         exposeIds(config);
         //configure cors mapping
         cors.addMapping(config.getBasePath() + "/**").allowedOrigins(allowedOrigins);
